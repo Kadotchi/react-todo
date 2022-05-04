@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-export const App = () => {
+import InputTodo from "./components/InputTodo";
+import IncompliteTodo from "./components/IncompliteTodo";
+import CompliteTodo from "./components/CompliteTodo";
+
+const App = () => {
   const [todoText, setTodoText] = useState("");
   const [incompliteTodos, setIncompliteTodos] = useState([]);
   const [compliteTodos, setCompliteTodos] = useState([]);
 
   //入力された文字をtodoTextにセットする。
-  const onChangeTodoText = (event) => setTodoText(event.target.value);
+  const onChangeTodoText = (event) => {
+    console.log("onChangeTodoText");
+    setTodoText(event.target.value);
+  };
   //TODOを追加する時の処理
   const onClickAdd = () => {
     if (todoText === "") return;
@@ -48,43 +55,19 @@ export const App = () => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="TODOを入力"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>追加</button>
-      </div>
-      <div className="incomplite-area">
-        <p className="title">未完了のTODO</p>
-        <ul>
-          {/*マップを処理*/}
-          {incompliteTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={() => onClickComplite(index)}>完了</button>
-                {/* 関数に引数を渡したい解きはアロー関数で渡す。 */}
-                <button onClick={() => onClickDelite(index)}>削除</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="complite-area">
-        <p className="title">完了のTODO</p>
-        <ul>
-          {compliteTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={() => onClickBack(index)}>戻す</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
+      <InputTodo
+        todoText={todoText}
+        onChange={onChangeTodoText}
+        onClick={onClickAdd}
+      />
+      <IncompliteTodo
+        todos={incompliteTodos}
+        onClickComplite={onClickComplite}
+        onClickDelite={onClickDelite}
+      />
+      <CompliteTodo todos={compliteTodos} onClickBack={onClickBack} />
     </>
   );
 };
+
+export default App;
