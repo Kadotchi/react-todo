@@ -59,7 +59,13 @@ const App = () => {
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
+        disabled={incompliteTodos.length >= 5}
       />
+      {incompliteTodos.length >= 5 && (
+        <p style={{ color: "red" }}>
+          登録できるtodoは５個までだよ〜。todoを消化してね〜
+        </p>
+      )}
       <IncompliteTodo
         todos={incompliteTodos}
         onClickComplite={onClickComplite}
