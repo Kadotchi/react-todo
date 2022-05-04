@@ -17,6 +17,18 @@ export const App = () => {
     setTodoText("");
   };
 
+  //　完了機能
+  const onClickComplite = (index) => {
+    // 未完了のTodoから削除
+    const newIncompliteTodos = [...incompliteTodos];
+    newIncompliteTodos.splice(index, 1);
+    // 新しい完了TODOの配列を生成
+    const newCompliteTodos = [...compliteTodos, incompliteTodos[index]];
+    setIncompliteTodos(newIncompliteTodos);
+    setCompliteTodos(newCompliteTodos);
+  };
+
+  //　削除機能
   const onClickDelite = (index) => {
     const newTodos = [...incompliteTodos];
     // 指定したインデックスの要素を削除
@@ -42,7 +54,7 @@ export const App = () => {
             return (
               <div key={todo} className="list-row">
                 <li>{todo}</li>
-                <button>完了</button>
+                <button onClick={() => onClickComplite(index)}>完了</button>
                 {/* 関数に引数を渡したい解きはアロー関数で渡す。 */}
                 <button onClick={() => onClickDelite(index)}>削除</button>
               </div>
@@ -55,7 +67,7 @@ export const App = () => {
         <ul>
           {compliteTodos.map((todo) => {
             return (
-              <div className="list-row">
+              <div key={todo} className="list-row">
                 <li>{todo}</li>
                 <button>戻す</button>
               </div>
