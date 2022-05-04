@@ -3,8 +3,8 @@ import "./styles.css";
 
 export const App = () => {
   const [todoText, setTodoText] = useState("");
-  const [incompliteTodos, setIncompliteTodos] = useState(["aaaa", "bbbb"]);
-  const [compliteTodos, setCompliteTodos] = useState(["bbbb"]);
+  const [incompliteTodos, setIncompliteTodos] = useState([]);
+  const [compliteTodos, setCompliteTodos] = useState([]);
 
   //入力された文字をtodoTextにセットする。
   const onChangeTodoText = (event) => setTodoText(event.target.value);
@@ -36,6 +36,16 @@ export const App = () => {
     setIncompliteTodos(newTodos);
   };
 
+  // 戻す機能
+  const onClickBack = (index) => {
+    const newCompliteTodos = [...compliteTodos];
+    newCompliteTodos.splice(index, 1);
+
+    const newInCompliteTodos = [...incompliteTodos, compliteTodos[index]];
+    setCompliteTodos(newCompliteTodos);
+    setIncompliteTodos(newInCompliteTodos);
+  };
+
   return (
     <>
       <div className="input-area">
@@ -65,11 +75,11 @@ export const App = () => {
       <div className="complite-area">
         <p className="title">完了のTODO</p>
         <ul>
-          {compliteTodos.map((todo) => {
+          {compliteTodos.map((todo, index) => {
             return (
               <div key={todo} className="list-row">
                 <li>{todo}</li>
-                <button>戻す</button>
+                <button onClick={() => onClickBack(index)}>戻す</button>
               </div>
             );
           })}
