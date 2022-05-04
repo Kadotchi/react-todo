@@ -12,7 +12,6 @@ const App = () => {
 
   //入力された文字をtodoTextにセットする。
   const onChangeTodoText = (event) => {
-    console.log("onChangeTodoText");
     setTodoText(event.target.value);
   };
   //TODOを追加する時の処理
